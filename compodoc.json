@@ -1,0 +1,7 @@
+{
+  "tsconfig": "./tsconfig.json",
+  "output": "./documentation",
+  "name": "My NestJS App Docs",
+  "includes": "./src",
+  "theme": "default"
+}
