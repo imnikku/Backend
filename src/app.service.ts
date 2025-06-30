@@ -6,20 +6,19 @@ import { ResponseWrapper } from './shared/response/response.wrapper';
 import { ResponseCodes } from './shared/response/response.codes';
 import { UniqueKeyGeneration } from './shared/utilities/db-key-modifier';
 import { WinstonLogger } from './config/logger-config';
+import { requestContextStore } from './shared/request/request-middleware';
+import { AppConfigs } from './config/app-config';
 
 @Injectable()
 export class AppService {
   private readonly logger = new WinstonLogger(AppService.name);
 
   getHello() {
-this.logger.error('test')
-// this.logger.log('check','test')
-this.logger.info('test')
-this.logger.notice('test')
+let id= requestContextStore.getStore()?.get(AppConfigs.request_id)
 
 
 
- return {data:UniqueKeyGeneration()}
+ return {data:id}
   }
 
 

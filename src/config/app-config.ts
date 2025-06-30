@@ -11,6 +11,9 @@ export const AppConfigs = {
     app_name: process.env.APP_NAME || 'BACKEND',
     port: process.env.PORT || 3000,
 
+    // ✅ Constant Value
+    request_id:process.env.REQUEST_ID||'request_id',
+
 
     // ✅ Mongodb Connection details 
     mongodbUri: process.env.MONGO_URI || 'N/A',
