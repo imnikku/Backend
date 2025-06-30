@@ -36,6 +36,7 @@ export const AppConfigs = {
     redis_max_retry:Number(process.env.REDIS_MAX_RETRY||18),
     redis_client:process.env.REDIS_CLIENT||'REDIS_CLIENT',
     redis_cache_environment:process.env.REDIS_CACHE_ENVIRONMENT||'DEV',
+    redis_url:process.env.REDIS_URL||'N/A'
 
 
 

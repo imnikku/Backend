@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import * as winston from 'winston';
 import * as path from 'path';
 import 'winston-daily-rotate-file';
+import { UniqueKeyGeneration } from "src/shared/utilities/db-key-modifier";
 
 const customLevels = {
     levels: {
@@ -44,7 +45,7 @@ const customLevels = {
 @Injectable()
 export class WinstonLogger {
     private readonly logger: winston.Logger;
-    constructor() {
+    constructor(name:string) {
         const logDir = path.join(process.cwd(), 'logs');
 
         this.logger = winston.createLogger({
@@ -57,7 +58,7 @@ export class WinstonLogger {
                 winston.format.colorize({ all: true, colors: customLevels.colors }),
 
                 winston.format.printf(({ timestamp, level, message }) => {
-                    return `${timestamp} [${level}]: ${message}`;
+                    return `${timestamp} [${UniqueKeyGeneration()}]:[${name}]:[${level}]: ${message}`;
                 }),
 
             ),
@@ -95,16 +96,20 @@ export class WinstonLogger {
     }
 
     error(message: string) {
-        this.logger.error(`This is winston error : - ${message}`)
+        this.logger.error(message)
         
     }
 
     info(message: string) {
-        this.logger.info(`This is winston info : - ${message}`)
+        this.logger.info(message)
     }
 
     notice(message: string) {
-        this.logger.notice(`This is winston notice:- ${message}`)
+        this.logger.notice(message)
+    }
+
+    log(level:string,message: string) {
+        this.logger.log(level,message)
     }
 
 }

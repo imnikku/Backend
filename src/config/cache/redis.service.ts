@@ -60,6 +60,8 @@ export class RedisService implements OnModuleInit {
 
   onModuleInit() {
     // Optional example subscription
+
+    this.set('user','1',{data:'nitesh'})
     this.subscribe('system:logs', (msg) => {
       console.log(`[Redis PUBSUB] system:logs ->`, msg);
     });
