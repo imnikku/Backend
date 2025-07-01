@@ -3,6 +3,8 @@ import * as winston from 'winston';
 import * as path from 'path';
 import 'winston-daily-rotate-file';
 import { UniqueKeyGeneration } from "src/shared/utilities/db-key-modifier";
+import { requestContextStore } from "src/shared/request/request-middleware";
+import { AppConfigs } from "./app-config";
 
 const customLevels = {
     levels: {
@@ -58,7 +60,7 @@ export class WinstonLogger {
                 winston.format.colorize({ all: true, colors: customLevels.colors }),
 
                 winston.format.printf(({ timestamp, level, message }) => {
-                    return `${timestamp} [${UniqueKeyGeneration()}]:[${name}]:[${level}]: ${message}`;
+                    return `${timestamp} [${requestContextStore.getStore()?.get(AppConfigs.request_id)}]:[${name}]:[${level}]: ${message}`;
                 }),
 
             ),
