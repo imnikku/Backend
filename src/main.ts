@@ -5,12 +5,16 @@ import { swaggerConfig } from './config/swagger-config';
 import { ValidationPipe } from '@nestjs/common';
 import { CustomExceptionFilter } from './shared/exception/custome-exception-filter';
 import { ResponseInterceptor } from './shared/response/response-interceptor';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
   app.useGlobalFilters(new CustomExceptionFilter())
   app.useGlobalInterceptors(new ResponseInterceptor())
+  app.setViewEngine('ejs');
+  app.setBaseViewsDir(join(__dirname, './', 'view'));
   const document = SwaggerModule.createDocument(app, swaggerConfig, { extraModels: [] });
   SwaggerModule.setup('/api', app, document, {swaggerOptions: {persistAuthorization: true}});
   await app.listen(process.env.PORT ?? 5000);
